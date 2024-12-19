@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <style>
+    .container {
+      background-color: white;
+      /* White background */
+      border: 2px solid b;
+      /* Green border */
+      border-radius: 8px;
+      max-width: 600px;
+      margin: 40px auto;
+      padding: 20px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .form-check-input,
+    .form-check-label {
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <div class="container-fluid">
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-center" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a class="nav-link active" aria-current="page" href="/pythonProject/templates/home.html">Home</a>
+          <a class="nav-link" href="/pythonProject/templates/performance.html">Performance</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+  <form action="/">
+    <div class="container">
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Enter the distance : </label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="0.0">
+      </div>
+      <div class="form-group">
+        <select class="form-select" aria-label="Default select example">
+          <option selected>Choose the time</option>
+          <option value="Morning">Morning</option>
+          <option value="Afternoon">Afternoon</option>
+          <option value="Evening">Evening</option>
+          <option value="Night">Night</option>
+        </select><br>
+      </div>
+      <input class="form-check-input" type="radio" name="weekday" id="weekday">
+      <label class="form-check-label" for="weekday">
+        Weekday
+      </label>
+      <input class="form-check-input" type="radio" name="Weekend" id="Weekend">
+      <label class="form-check-label" for="Weekend">
+        Weekend
+      </label>
+      <br><br>
+      <div class="form-group">
+        <select class="form-select" aria-label="Default select example">
+          <option selected>Open this select menu</option>
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+        </select><br>
+      </div>
+      <div class="mb-3">
+        <label for="exampleFormControlInput1" class="form-label">Expected duration(minutes): </label>
+        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="0.0">
+      </div>
+      <input class="form-check-input" type="radio" name="Linear-regression" id="Linear Regression">
+      <label for="Linear Regression">Linear Regression</label>
+      <input class="form-check-input" type="radio" name="decision tree" id="decision tree">
+      <label for="decision tree">Decision tree</label>
+      <input class="form-check-input" type="radio" name="Random Forest" id="Random Forest">
+      <label for="Random Forest">Random Forest</label><br><br>
+      <div class="d-grid gap-2 col-6 mx-auto">
+        <submit type="button" class="btn btn-outline-secondary">Secondary</button>
+      </div>
+
+    </div>
+  </form>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>
