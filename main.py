@@ -6,7 +6,9 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.linear_model import LinearRegression
 from sklearn.tree import DecisionTreeRegressor
 
-df = pd.read_csv("D:/ML AAT/taxi_trip_pricing.csv")
+from path import path
+
+df = pd.read_csv(path)
 
 def one_hot_encoder(dataframe, categorical_cols, drop_first=False):
     dataframe = pd.get_dummies(dataframe, columns=categorical_cols, drop_first=drop_first)
@@ -77,24 +79,24 @@ print(f"Linear Regression - MSE: {mse}, MAE: {mae}, R2: {r2}")
 
 # Create a sample DataFrame (replace with your actual data)
 data = {
+    'Trip_Distance_km': [120],
     'Time_of_Day': ['Morning'],
     'Day_of_Week': ['Weekday'],
+    'Passenger_Count': [1],
     'Traffic_Conditions': ['Light'],
     'Weather': ['Sunny'],
-    'Passenger_Count': [1],
-    'Trip_Distance_km': [120],
     'Base_Fare': [5.0],
     'Per_Km_Rate': [1.5],
     'Per_Minute_Rate': [0.5],
     'Trip_Duration_Minutes': [10]
 }
-df = pd.DataFrame(data)
+df1 = pd.DataFrame(data)
 
 
 training_columns = x_train.columns
 
 
-new_data = encode(df).reindex(columns=training_columns, fill_value=0)
+new_data = encode(df1).reindex(columns=training_columns, fill_value=0)
 
 predicted_fare = rand_model.predict(new_data)
 print(predicted_fare)
