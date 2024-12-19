@@ -51,19 +51,20 @@
         <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="0.0">
       </div>
       <div class="form-group">
+
         <select class="form-select" aria-label="Default select example">
           <option selected>Choose the time</option>
-          <option value="Morning">Morning</option>
-          <option value="Afternoon">Afternoon</option>
-          <option value="Evening">Evening</option>
-          <option value="Night">Night</option>
+          <option value="Morning">Morning(6AM - 12PM)</option>
+          <option value="Afternoon">Afternoon(12PM - 3PM)</option>
+          <option value="Evening">Evening(3PM - 9PM)</option>
+          <option value="Night">Night(9PM - 6AM)</option>
         </select><br>
       </div>
       <input class="form-check-input" type="radio" name="weekday" id="weekday">
       <label class="form-check-label" for="weekday">
         Weekday
       </label>
-      <input class="form-check-input" type="radio" name="Weekend" id="Weekend">
+      <input class="form-check-input" type="radio" name="weekday" id="Weekend">
       <label class="form-check-label" for="Weekend">
         Weekend
       </label>
@@ -78,17 +79,17 @@
         </select><br>
       </div>
       <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Expected duration(minutes): </label>
-        <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="0.0">
+        <label for="exampleFormControlInput2" class="form-label">Expected duration(minutes): </label>
+        <input type="text" class="form-control" id="exampleFormControlInput2" placeholder="0.0">
       </div>
-      <input class="form-check-input" type="radio" name="Linear-regression" id="Linear Regression">
+      <input class="form-check-input" type="radio" name="model" id="Linear Regression">
       <label for="Linear Regression">Linear Regression</label>
-      <input class="form-check-input" type="radio" name="decision tree" id="decision tree">
+      <input class="form-check-input" type="radio" name="model" id="decision tree">
       <label for="decision tree">Decision tree</label>
-      <input class="form-check-input" type="radio" name="Random Forest" id="Random Forest">
+      <input class="form-check-input" type="radio" name="model" id="Random Forest">
       <label for="Random Forest">Random Forest</label><br><br>
       <div class="d-grid gap-2 col-6 mx-auto">
-        <submit type="button" class="btn btn-outline-secondary">Secondary</button>
+        <submit type="button" class="btn btn-outline-secondary">Run</submit>
       </div>
 
     </div>
