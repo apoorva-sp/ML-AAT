@@ -1,10 +1,14 @@
+from datetime import datetime
+
+import googlemaps
 import pandas as pd
 from flask import Flask, render_template, request
 from random import uniform
 from main import pre_processing, linear_regression, decision_tree, random_forest, evaluate, encode, random_traffic, \
     random_weather
-from path import path
+from path import path, api_key
 
+gmaps = googlemaps.Client(key=api_key)
 app = Flask(__name__)
 
 models = []
@@ -24,8 +28,10 @@ performances.extend([linear_regression_model[1], decision_tree_model[1], random_
 for p in performances:
     performances_measure.append(evaluate(y_test, p))
 
+
 @app.route('/')
 def root():
+    print(performances_measure)
     return render_template('home.html')
 
 
@@ -36,26 +42,35 @@ def performance():
 
 @app.route('/predicted', methods=["POST"])
 def home():
+    now = datetime.now()
+    directions_result = gmaps.directions("kamakshipalya bangalore karnataka",
+                                         "elimale karnataka",
+                                         mode="driving",
+                                         departure_time=now)
+    distance = directions_result[0]["legs"][0]["distance"]["value"] / 1000
+    duration = directions_result[0]["legs"][0]["duration"]["value"] / 60
     data = {
-        'Trip_Distance_km': [float(request.form['distance'] or 0)],
+        'Trip_Distance_km': [distance],
         'Time_of_Day': [request.form['time']],
         'Day_of_Week': [request.form['day_type']],
         'Passenger_Count': [int(request.form['passengers'])],
         'Traffic_Conditions': [random_traffic()],
         'Weather': [random_weather()],
-        'Base_Fare': [uniform(2.01,5.0)],
-        'Per_Km_Rate': [uniform(0.5,2.0)],
-        'Per_Minute_Rate': [uniform(0.1,0.5)],
-        'Trip_Duration_Minutes': [float(request.form['duration'] or 0)]
+        'Base_Fare': [uniform(2.01, 5.0)],
+        'Per_Km_Rate': [uniform(0.5, 2.0)],
+        'Per_Minute_Rate': [uniform(0.1, 0.5)],
+        'Trip_Duration_Minutes': [duration]
     }
     user_data_frame = pd.DataFrame(data)
     training_columns = x_train.columns
     new_data = encode(user_data_frame).reindex(columns=training_columns, fill_value=0)
-    model_selected = int(request.form['model'])
-    predicted_fare = models[model_selected].predict(new_data)
+    predicted_fare = 0
+    for i in range(3):
+        predicted_fare += models[i].predict(new_data)[0]
+    predicted_fare = round(predicted_fare / 3, 2)
     if int(data['Trip_Distance_km'][0]) == 0 or int(data['Trip_Duration_Minutes'][0]) == 0:
-        predicted_fare = [0]
-    return render_template('predicted.html', value=round(predicted_fare[0],2))
+        predicted_fare = 0
+    return render_template('predicted.html', value=round(predicted_fare, 2))
 
 
 if __name__ == '__main__':
