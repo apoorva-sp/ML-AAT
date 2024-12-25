@@ -25,39 +25,20 @@
 
 <div class="container">
     <div class="row justify-content-center">
+
+        {%for row in performance_data%}
         <div class="col-md-4">
-            <div class="card mb-3">
+            <div class="card mb-3" style="background-color: #e3f2fd;">
                 <div class="card-body text-center">
-                    <h5 class="card-title">Linear Regression</h5>
+                    <h5 class="card-title">{{row[0]}}</h5>
                     <h6 class="card-subtitle mb-2 text-muted">Performance Measures</h6>
-                    <p class="card-text">Mean Square Error: <strong>{{ performance_data[0][0] }}</strong></p>
-                    <p class="card-text">Mean Absolute Error: <strong>{{ performance_data[0][1] }}</strong></p>
-                    <p class="card-text">R2 Score: <strong>{{ performance_data[0][2] }}</strong></p>
+                    <p class="card-text">Mean Square Error: <strong>{{row[1][0]}}</strong></p>
+                    <p class="card-text">Mean Absolute Error: <strong>{{ row[1][1] }}</strong></p>
+                    <p class="card-text">R2 Score: <strong>{{ row[1][2] }}</strong></p>
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card mb-3">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Decision Tree Regressor (CART)</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Performance Measures</h6>
-                    <p class="card-text">Mean Square Error: <strong>{{ performance_data[1][0] }}</strong></p>
-                    <p class="card-text">Mean Absolute Error: <strong>{{ performance_data[1][1] }}</strong></p>
-                    <p class="card-text">R2 Score: <strong>{{ performance_data[1][2] }}</strong></p>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="card mb-3">
-                <div class="card-body text-center">
-                    <h5 class="card-title">Random Forest Classifier</h5>
-                    <h6 class="card-subtitle mb-2 text-muted">Performance Measures</h6>
-                    <p class="card-text">Mean Square Error: <strong>{{ performance_data[2][0] }}</strong></p>
-                    <p class="card-text">Mean Absolute Error: <strong>{{ performance_data[2][1] }}</strong></p>
-                    <p class="card-text">R2 Score: <strong>{{ performance_data[2][2] }}</strong></p>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
 </div>
 
