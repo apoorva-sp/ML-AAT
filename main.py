@@ -35,7 +35,7 @@ def linear_regression(x_train, x_test, y_train):
 
 
 def decision_tree(x_train, x_test, y_train):
-    model = DecisionTreeRegressor()
+    model = DecisionTreeRegressor(max_depth=5)
     model.fit(x_train, y_train)
     y_pred = model.predict(x_test)
     return model, y_pred

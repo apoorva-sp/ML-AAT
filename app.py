@@ -7,7 +7,7 @@ from random import uniform
 from main import pre_processing, linear_regression, decision_tree, random_forest, evaluate, encode, random_traffic, \
     random_weather
 from path import path, api_key
-from pre_processing import eval_models_with_pca
+from pre_processing import eval_models_with_pca, eval_models
 
 gmaps = googlemaps.Client(key=api_key)
 app = Flask(__name__)
@@ -24,12 +24,11 @@ linear_regression_model = linear_regression(x_train, x_test, y_train)
 decision_tree_model = decision_tree(x_train, x_test, y_train)
 random_forest_model = random_forest(x_train, x_test, y_train)
 evaluated_with_pca = eval_models_with_pca()
-
+evaluated_without_pca = eval_models()
 models.extend([linear_regression_model[0], decision_tree_model[0], random_forest_model[0]])
-performances.extend([linear_regression_model[1], decision_tree_model[1], random_forest_model[1]])
 
 for p in range(3):
-    performances_measure.append([names[p], evaluate(y_test, performances[p])])
+    performances_measure.append([names[p], evaluated_without_pca[p]])
 
 for i in range(3):
     performances_measure.append([names[i] + " with PCA", evaluated_with_pca[i]])

@@ -24,9 +24,11 @@ def pre_processing_dataset():
     y = df.iloc[:, -1].values
 
     imp = SimpleImputer(missing_values=np.nan, strategy='mean')
+    imp_categorical = SimpleImputer(missing_values=np.nan, strategy='most_frequent')
     ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), cat_col_indexes)], remainder='passthrough')
 
     x[:, num_col_indexes] = imp.fit_transform(x[:, num_col_indexes])
+    x[:, cat_col_indexes] = imp_categorical.fit_transform(x[:, cat_col_indexes])
     y = y.reshape(-1, 1)
     y = imp.fit_transform(y).ravel()
     x = np.array(ct.fit_transform(x))
@@ -55,21 +57,24 @@ def pre_processing_dataset_with_pca():
     cat_col_indexes = [1, 2, 3, 4, 5]
     num_col_indexes = [0, 6, 7, 8, 9]
 
-    df = pd.read_csv(path)
-    x = df.iloc[:, :-1].values
-    y = df.iloc[:, -1].values
+    df_pca = pd.read_csv(path)
+    x = df_pca.iloc[:, :-1].values
+    y = df_pca.iloc[:, -1].values
 
-    imp = SimpleImputer(missing_values=np.nan, strategy='mean')
+    imp_numerical = SimpleImputer(missing_values=np.nan, strategy='mean')
+    # imp_categorical = SimpleImputer(missing_values=np.nan, strategy='most_frequent')
     ct = ColumnTransformer(transformers=[('encoder', OneHotEncoder(), cat_col_indexes)], remainder='passthrough')
 
-    x[:, num_col_indexes] = imp.fit_transform(x[:, num_col_indexes])
+    x[:, num_col_indexes] = imp_numerical.fit_transform(x[:, num_col_indexes])
+    # x[:, cat_col_indexes] = imp_categorical.fit_transform(x[:, cat_col_indexes])
     y = y.reshape(-1, 1)
-    y = imp.fit_transform(y).ravel()
+    y = imp_numerical.fit_transform(y).ravel()
     x = np.array(ct.fit_transform(x))
     sc = StandardScaler()
     x = sc.fit_transform(x)
     pca = PCA()
     x_reduced = pca.fit_transform(x)
+
     return train_test_split(x_reduced, y, test_size=0.2, random_state=0)
 
 
@@ -80,5 +85,29 @@ def eval_models_with_pca():
     rf = random_forest(x_train, x_test, y_train)
     return evaluate(y_test, lr[1]), evaluate(y_test, dt[1]), evaluate(y_test, rf[1])
 
-# eval_models()
-# eval_models_with_pca()
+
+def check_null_values_after_preprocessing(x, y):
+    null_in_x = np.isnan(x).any()
+    null_in_y = np.isnan(y).any()
+    return {"null_in_features": null_in_x, "null_in_target": null_in_y}
+
+
+def check_nan_values():
+    x_train, x_test, y_train, y_test = pre_processing_dataset()
+    null_check_no_pca_train = check_null_values_after_preprocessing(x_train, y_train)
+    null_check_no_pca_test = check_null_values_after_preprocessing(x_test, y_test)
+
+    print("Null check after preprocessing (no PCA):")
+    print("Training Data:", null_check_no_pca_train)
+    print("Testing Data:", null_check_no_pca_test)
+
+    x_train_pca, x_test_pca, y_train_pca, y_test_pca = pre_processing_dataset_with_pca()
+    null_check_with_pca_train = check_null_values_after_preprocessing(x_train_pca, y_train_pca)
+    null_check_with_pca_test = check_null_values_after_preprocessing(x_test_pca, y_test_pca)
+
+    print("\nNull check after preprocessing (with PCA):")
+    print("Training Data:", null_check_with_pca_train)
+    print("Testing Data:", null_check_with_pca_test)
+
+
+# check_nan_values()
