@@ -72,7 +72,7 @@ def pre_processing_dataset_with_pca():
     x = np.array(ct.fit_transform(x))
     sc = StandardScaler()
     x = sc.fit_transform(x)
-    pca = PCA()
+    pca = PCA(n_components=15)
     x_reduced = pca.fit_transform(x)
 
     return train_test_split(x_reduced, y, test_size=0.2, random_state=0)
